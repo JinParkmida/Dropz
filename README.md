@@ -256,12 +256,9 @@ For users who want higher quality translations, you can optionally configure:
 - **Local Processing**: Most processing happens in your browser
 
 ### Permissions Explained
-- **tabCapture**: Required to access audio from video tabs
+- **tabCapture**: Uses `chrome.tabCapture.getMediaStreamId` to capture audio from the active tab. When started from a user click, Chrome does not prompt for microphone permission. Calling capture programmatically without user interaction will be blocked with no prompt.
 - **activeTab**: Needed to inject subtitle overlay
 - **storage**: For saving settings and translation cache
-- **microphone**: Required by Chrome when using the Web Speech API. Even though
-  the extension processes tab audio, the browser still requests microphone
-  permission to start speech recognition.
 
 ## Troubleshooting
 
@@ -286,9 +283,8 @@ For users who want higher quality translations, you can optionally configure:
 - **Verify**: Video platform is supported
 
 #### "Mic Access Required" Warning
-- **Check Manifest**: Ensure `"microphone"` permission is included in `manifest.json` and `<all_urls>` is in `host_permissions`.
-- **Allow in Browser**: Visit `chrome://settings/content/microphone` and grant access.
-- **Trigger from Popup**: Start capture with a user-initiated click.
+- Chrome will not show a microphone prompt when capture starts from the popup.
+- If capture is attempted without user interaction, Chrome blocks it silently.
 - **Reset**: Remove and re-add the extension if permissions are stuck.
 
 ### Browser Compatibility
