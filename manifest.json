@@ -40,16 +40,25 @@
   },
   "options_page": "options.html",
   "icons": {
-    "16": "icons/icon16.png",
-    "19": "icons/icon19.png",
-    "32": "icons/icon32.png",
-    "38": "icons/icon38.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
+    "16": "icon16.png",
+    "19": "icon19.png",
+    "32": "icon32.png",
+    "38": "icon38.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
   },
   "web_accessible_resources": [
     {
-      "resources": ["content.css", "icons/*", "offscreen.html"],
+      "resources": [
+        "content.css",
+        "icon16.png",
+        "icon19.png",
+        "icon32.png",
+        "icon38.png",
+        "icon48.png",
+        "icon128.png",
+        "offscreen.html"
+      ],
       "matches": ["<all_urls>"]
     }
   ],
