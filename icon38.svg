@@ -1,0 +1,21 @@
+
+<svg width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad38" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="38" height="38" rx="5.7" fill="url(#grad38)"/>
+  
+  <!-- Number text -->
+  <text x="50%" y="50%" 
+        font-family="Arial, sans-serif" 
+        font-weight="bold" 
+        font-size="22.8" 
+        fill="white" 
+        text-anchor="middle" 
+        dominant-baseline="central">38</text>
+</svg>
