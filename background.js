@@ -73,20 +73,55 @@ class BackgroundController {
   }
 
   async startCaptureForTab(tabId) {
+    if (!tabId) {
+      console.error('No tab ID provided');
+      return;
+    }
+
+    if (this.activeStreams.has(tabId)) {
+      console.log('Tab already has active stream:', tabId);
+      this.sendMessageToTab(tabId, {
+        type: 'CAPTURE_ERROR',
+        error: 'Tab is already being captured'
+      });
+      return;
+    }
+
     try {
-      // Check if tab is already being captured
-      if (this.activeStreams.has(tabId)) {
-        console.log('Tab already has active stream:', tabId);
-        return;
+      this.currentTabId = tabId;
+
+      // Create offscreen document if it doesn't exist
+      if (!this.offscreenDocumentCreated) {
+        await this.createOffscreenDocument();
       }
 
-      this.captureState.set(tabId, true);
+      // Use chrome.tabCapture.getMediaStreamId() to get streamId
+      const streamId = await chrome.tabCapture.getMediaStreamId({
+        targetTabId: tabId
+      });
+
+      if (!streamId) {
+        throw new Error('Failed to get media stream ID');
+      }
+
+      // Send the streamId to offscreen document for proper audio capture
+      this.sendMessageToOffscreen({
+        type: 'START_RECOGNITION',
+        streamId: streamId,
+        tabId: tabId,
+        settings: this.settings
+      });
+
       this.activeStreams.add(tabId);
-      await this.startCapture(tabId);
+      this.captureState.set(tabId, true);
     } catch (error) {
       console.error('Failed to start capture for tab:', error);
       this.captureState.set(tabId, false);
       this.activeStreams.delete(tabId);
+      this.sendMessageToTab(tabId, {
+        type: 'CAPTURE_ERROR',
+        error: error.message
+      });
     }
   }
 
@@ -243,54 +278,6 @@ class BackgroundController {
     }
   }
 
-  async startCapture(tabId) {
-    try {
-      if (!tabId) {
-        throw new Error('No tab ID provided');
-      }
-
-      // Check if already capturing this tab
-      if (this.activeStreams.has(tabId)) {
-        throw new Error('Tab is already being captured');
-      }
-
-      this.currentTabId = tabId;
-      
-      // Create offscreen document if it doesn't exist
-      if (!this.offscreenDocumentCreated) {
-        await this.createOffscreenDocument();
-      }
-
-      // CRITICAL FIX: Use chrome.tabCapture.getMediaStreamId() to get streamId
-      // This is the correct way to capture tab audio without microphone permissions
-      const streamId = await chrome.tabCapture.getMediaStreamId({
-        targetTabId: tabId
-      });
-
-      if (!streamId) {
-        throw new Error('Failed to get media stream ID');
-      }
-
-      // Send the streamId to offscreen document for proper audio capture
-      this.sendMessageToOffscreen({
-        type: 'START_RECOGNITION',
-        streamId: streamId,
-        tabId: tabId,
-        settings: this.settings
-      });
-
-      this.activeStreams.add(tabId);
-
-    } catch (error) {
-      console.error('Audio capture failed:', error);
-      this.captureState.set(tabId, false);
-      this.activeStreams.delete(tabId);
-      this.sendMessageToTab(tabId, {
-        type: 'CAPTURE_ERROR',
-        error: error.message
-      });
-    }
-  }
 
   async stopCapture() {
     if (this.offscreenDocumentCreated) {
