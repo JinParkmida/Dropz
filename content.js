@@ -583,6 +583,12 @@ class SubtitleOverlay {
           console.error('Transcription error:', request.error);
           this.showNotification(`Transcription error: ${request.error}`, 'warning');
           break;
+
+        case 'MIC_PERMISSION_DENIED':
+          this.isActive = false;
+          console.error('Microphone permission denied');
+          this.showNotification('Please allow microphone access to use captions.', 'error');
+          break;
       }
       
       sendResponse({ success: true });

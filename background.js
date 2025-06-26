@@ -231,6 +231,19 @@ class BackgroundController {
           sendResponse({ success: true });
           break;
 
+        case 'MIC_PERMISSION_DENIED':
+          this.isCapturing = false;
+          if (request.tabId) {
+            this.captureState.set(request.tabId, false);
+            this.activeStreams.delete(request.tabId);
+            this.sendMessageToTab(request.tabId, {
+              type: 'MIC_PERMISSION_DENIED',
+              error: request.error
+            });
+          }
+          sendResponse({ success: true });
+          break;
+
         case 'NEW_SUBTITLE':
           if (request.tabId) {
             this.sendMessageToTab(request.tabId, {
