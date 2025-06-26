@@ -6,7 +6,6 @@
   "permissions": [
     "activeTab",
     "tabCapture",
-    "microphone",
     "storage",
     "scripting",
     "offscreen"
