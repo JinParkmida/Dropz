@@ -382,21 +382,28 @@ class SubtitleOverlay {
         return;
       }
       
-      // Create subtitle content
-      let content = '';
+      // Clear existing content
+      this.overlayElement.textContent = '';
+
       console.log('showOriginal setting:', this.settings.showOriginal);
       console.log('autoHide setting:', this.settings.autoHide);
-      
-      if (this.settings.showOriginal) {
-        const opacity = interim ? '0.6' : '0.8';
-        content += `<div class="original-text" style="opacity: ${opacity}; font-size: 0.9em; margin-bottom: 4px;">${original}</div>`;
-      }
-      
-      const translationText = interim ? `${translated} ...` : translated;
-      const opacity = interim ? '0.7' : '1';
-      content += `<div class="translated-text" style="opacity: ${opacity};">${translationText}</div>`;
 
-      this.overlayElement.innerHTML = content;
+      if (this.settings.showOriginal) {
+        const originalDiv = document.createElement('div');
+        originalDiv.classList.add('original-text');
+        originalDiv.textContent = original;
+        originalDiv.style.opacity = interim ? '0.6' : '0.8';
+        originalDiv.style.fontSize = '0.9em';
+        originalDiv.style.marginBottom = '4px';
+        this.overlayElement.appendChild(originalDiv);
+      }
+
+      const translationText = interim ? `${translated} ...` : translated;
+      const translatedDiv = document.createElement('div');
+      translatedDiv.classList.add('translated-text');
+      translatedDiv.textContent = translationText;
+      translatedDiv.style.opacity = interim ? '0.7' : '1';
+      this.overlayElement.appendChild(translatedDiv);
       
       // Position and show overlay
       this.positionOverlay();
