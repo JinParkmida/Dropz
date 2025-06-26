@@ -6,13 +6,13 @@
   "permissions": [
     "activeTab",
     "tabCapture",
+    "microphone",
     "storage",
     "scripting",
     "offscreen"
   ],
   "host_permissions": [
-    "https://*/*",
-    "http://*/*"
+    "<all_urls>"
   ],
   "background": {
     "service_worker": "background.js"

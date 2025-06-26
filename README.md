@@ -285,6 +285,12 @@ For users who want higher quality translations, you can optionally configure:
 - **Try**: Reloading the extension
 - **Verify**: Video platform is supported
 
+#### "Mic Access Required" Warning
+- **Check Manifest**: Ensure `"microphone"` permission is included in `manifest.json` and `<all_urls>` is in `host_permissions`.
+- **Allow in Browser**: Visit `chrome://settings/content/microphone` and grant access.
+- **Trigger from Popup**: Start capture with a user-initiated click.
+- **Reset**: Remove and re-add the extension if permissions are stuck.
+
 ### Browser Compatibility
 The extension checks browser compatibility automatically:
 - **Web Speech API**: Required for speech recognition
