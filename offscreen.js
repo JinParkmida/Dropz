@@ -160,8 +160,20 @@ class OffscreenAudioProcessor {
     // Handle recognition errors
     this.recognition.onerror = (event) => {
       console.error('Speech recognition error:', event.error);
-      
-      if (event.error === 'no-speech' && this.isCapturing) {
+
+      if (event.error === 'not-allowed') {
+        // User denied microphone permissions
+        chrome.runtime.sendMessage({
+          type: 'MIC_PERMISSION_DENIED',
+          tabId: this.currentTabId,
+          error: 'Microphone access was denied'
+        }).catch(err => {
+          console.error('Failed to send mic permission error:', err);
+        });
+
+        // Stop further recognition attempts
+        this.stopRecognition();
+      } else if (event.error === 'no-speech' && this.isCapturing) {
         // Only restart for recoverable errors
         this.scheduleRestart();
       } else if (event.error === 'audio-capture') {
