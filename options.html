@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Korean Subtitle Translator - Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+        <div>
+          <h1>Korean Subtitle Translator</h1>
+          <p>Advanced Settings & Configuration</p>
+        </div>
+      </div>
+    </header>
+
+    <nav class="nav">
+      <button class="nav-button active" data-tab="translation">Translation Settings</button>
+      <button class="nav-button" data-tab="display">Display Settings</button>
+      <button class="nav-button" data-tab="performance">Performance</button>
+      <button class="nav-button" data-tab="about">About</button>
+    </nav>
+
+    <main class="main">
+      <!-- Translation Settings Tab -->
+      <section id="translation-tab" class="tab-content active">
+        <div class="section-header">
+          <h2>Translation Configuration</h2>
+          <p>Configure your translation services and speech recognition</p>
+        </div>
+
+        <div class="card">
+          <h3>Speech Recognition</h3>
+          <div class="info-row">
+            <span>Recognition Engine:</span>
+            <span>Web Speech API (Built-in)</span>
+          </div>
+          <div class="info-row">
+            <span>Language:</span>
+            <span>Korean (ko-KR)</span>
+          </div>
+          <div class="info-row">
+            <span>Cost:</span>
+            <span style="color: #38a169; font-weight: 600;">Free</span>
+          </div>
+          
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="continuousRecognition" name="continuousRecognition" checked>
+              <span class="checkmark"></span>
+              <div>
+                <strong>Continuous Recognition</strong>
+                <small>Keep listening for speech continuously</small>
+              </div>
+            </label>
+          </div>
+          
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="interimResults" name="interimResults" checked>
+              <span class="checkmark"></span>
+              <div>
+                <strong>Show Interim Results</strong>
+                <small>Display partial transcriptions while speaking</small>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Translation Service</h3>
+          <div class="form-group">
+            <label for="translationProvider">Provider</label>
+            <select id="translationProvider" name="translationProvider">
+              <option value="google">Google Translate (Free)</option>
+              <option value="openai">OpenAI GPT (Requires API Key)</option>
+            </select>
+            <small>Google Translate is free but uses an unofficial endpoint</small>
+          </div>
+        </div>
+
+        <div class="card" id="openaiSettings" style="display: none;">
+          <h3>OpenAI Settings (Optional)</h3>
+          <div class="form-group">
+            <label for="openaiApiKey">API Key</label>
+            <input type="password" id="openaiApiKey" name="openaiApiKey" placeholder="sk-...">
+            <small>Your OpenAI API key for premium translation quality</small>
+          </div>
+          
+          <div class="form-group">
+            <label for="translationModel">Translation Model</label>
+            <select id="translationModel" name="translationModel">
+              <option value="gpt-3.5-turbo">GPT-3.5 Turbo (Faster, Cheaper)</option>
+              <option value="gpt-4">GPT-4 (Higher Quality)</option>
+              <option value="gpt-4-turbo">GPT-4 Turbo (Best Quality)</option>
+            </select>
+            <small>Choose the GPT model for translation</small>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Recognition Quality</h3>
+          <div class="form-group">
+            <label for="sensitivity">Voice Detection Sensitivity: <span id="sensitivityDisplay">0.7</span></label>
+            <input type="range" id="sensitivity" name="sensitivity" min="0.1" max="1.0" step="0.1" value="0.7">
+            <small>Higher values detect quieter speech but may pick up background noise</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- Display Settings Tab -->
+      <section id="display-tab" class="tab-content">
+        <div class="section-header">
+          <h2>Display Settings</h2>
+          <p>Customize how subtitles appear on your videos</p>
+        </div>
+
+        <div class="card">
+          <h3>Typography</h3>
+          <div class="form-group">
+            <label for="fontFamily">Font Family</label>
+            <select id="fontFamily" name="fontFamily">
+              <option value="Arial, sans-serif">Arial</option>
+              <option value="'Segoe UI', sans-serif">Segoe UI</option>
+              <option value="'Helvetica Neue', sans-serif">Helvetica Neue</option>
+              <option value="'Times New Roman', serif">Times New Roman</option>
+              <option value="'Georgia', serif">Georgia</option>
+              <option value="'Courier New', monospace">Courier New</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="displayFontSize">Font Size: <span id="fontSizeDisplay">16px</span></label>
+            <input type="range" id="displayFontSize" name="displayFontSize" min="12" max="32" value="16">
+          </div>
+          
+          <div class="form-group">
+            <label for="fontWeight">Font Weight</label>
+            <select id="fontWeight" name="fontWeight">
+              <option value="400">Normal</option>
+              <option value="600">Semi-Bold</option>
+              <option value="700">Bold</option>
+              <option value="900">Extra Bold</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Colors & Appearance</h3>
+          <div class="form-group">
+            <label for="fontColor">Text Color</label>
+            <input type="color" id="fontColor" name="fontColor" value="#ffffff">
+          </div>
+          
+          <div class="form-group">
+            <label for="backgroundColor">Background Color</label>
+            <input type="color" id="backgroundColor" name="backgroundColor" value="#000000">
+          </div>
+          
+          <div class="form-group">
+            <label for="backgroundOpacity">Background Opacity: <span id="opacityDisplay">80%</span></label>
+            <input type="range" id="backgroundOpacity" name="backgroundOpacity" min="0" max="100" value="80">
+          </div>
+          
+          <div class="form-group">
+            <label for="borderRadius">Border Radius: <span id="radiusDisplay">4px</span></label>
+            <input type="range" id="borderRadius" name="borderRadius" min="0" max="20" value="4">
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Positioning</h3>
+          <div class="form-group">
+            <label for="displayPosition">Default Position</label>
+            <select id="displayPosition" name="displayPosition">
+              <option value="top">Top</option>
+              <option value="middle">Middle</option>
+              <option value="bottom">Bottom</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="horizontalAlign">Horizontal Alignment</label>
+            <select id="horizontalAlign" name="horizontalAlign">
+              <option value="left">Left</option>
+              <option value="center">Center</option>
+              <option value="right">Right</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="marginOffset">Margin from Edge: <span id="marginDisplay">20px</span></label>
+            <input type="range" id="marginOffset" name="marginOffset" min="5" max="50" value="20">
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Behavior</h3>
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="displayShowOriginal" name="displayShowOriginal">
+              <span class="checkmark"></span>
+              <div>
+                <strong>Show Original Korean Text</strong>
+                <small>Display both Korean and English text</small>
+              </div>
+            </label>
+          </div>
+          
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="displayAutoHide" name="displayAutoHide" checked>
+              <span class="checkmark"></span>
+              <div>
+                <strong>Auto-hide Subtitles</strong>
+                <small>Automatically hide subtitles after a few seconds</small>
+              </div>
+            </label>
+          </div>
+          
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="showInterimResults" name="showInterimResults" checked>
+              <span class="checkmark"></span>
+              <div>
+                <strong>Show Interim Results</strong>
+                <small>Display partial translations while speaking</small>
+              </div>
+            </label>
+          </div>
+          
+          <div class="form-group">
+            <label for="autoHideDuration">Auto-hide Duration: <span id="durationDisplay">3s</span></label>
+            <input type="range" id="autoHideDuration" name="autoHideDuration" min="1" max="10" value="3">
+          </div>
+        </div>
+
+        <!-- Live Preview -->
+        <div class="card preview-card">
+          <h3>Live Preview</h3>
+          <div class="preview-container">
+            <div class="preview-video">
+              <div class="preview-subtitle" id="previewSubtitle">
+                <div class="original-text">안녕하세요, 여러분!</div>
+                <div class="translated-text">Hello, everyone!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Performance Tab -->
+      <section id="performance-tab" class="tab-content">
+        <div class="section-header">
+          <h2>Performance Settings</h2>
+          <p>Optimize performance and audio processing</p>
+        </div>
+
+        <div class="card">
+          <h3>Audio Processing</h3>
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="noiseReduction" name="noiseReduction" checked>
+              <span class="checkmark"></span>
+              <div>
+                <strong>Noise Reduction</strong>
+                <small>Apply basic noise reduction before transcription</small>
+              </div>
+            </label>
+          </div>
+          
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="voiceEnhancement" name="voiceEnhancement" checked>
+              <span class="checkmark"></span>
+              <div>
+                <strong>Voice Enhancement</strong>
+                <small>Boost voice frequencies for better recognition</small>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Recognition Settings</h3>
+          <div class="form-group">
+            <label for="maxAlternatives">Max Alternatives: <span id="alternativesDisplay">1</span></label>
+            <input type="range" id="maxAlternatives" name="maxAlternatives" min="1" max="5" value="1">
+            <small>Number of alternative transcriptions to consider</small>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Caching & Storage</h3>
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="cacheTranslations" name="cacheTranslations" checked>
+              <span class="checkmark"></span>
+              <div>
+                <strong>Cache Translations</strong>
+                <small>Store translations locally to reduce API calls</small>
+              </div>
+            </label>
+          </div>
+          
+          <div class="form-group">
+            <label for="maxCacheSize">Max Cache Size: <span id="cacheDisplay">100MB</span></label>
+            <input type="range" id="maxCacheSize" name="maxCacheSize" min="10" max="500" value="100">
+            <small>Maximum storage for cached translations</small>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Browser Compatibility</h3>
+          <div class="info-row">
+            <span>Web Speech API:</span>
+            <span id="speechApiStatus">Checking...</span>
+          </div>
+          <div class="info-row">
+            <span>Audio Context:</span>
+            <span id="audioContextStatus">Checking...</span>
+          </div>
+          <div class="info-row">
+            <span>Media Stream:</span>
+            <span id="mediaStreamStatus">Checking...</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Tab -->
+      <section id="about-tab" class="tab-content">
+        <div class="section-header">
+          <h2>About</h2>
+          <p>Information about the Korean Subtitle Translator extension</p>
+        </div>
+
+        <div class="card">
+          <h3>Extension Information</h3>
+          <div class="info-row">
+            <span>Version:</span>
+            <span>1.0.0</span>
+          </div>
+          <div class="info-row">
+            <span>Last Updated:</span>
+            <span id="lastUpdated">Loading...</span>
+          </div>
+          <div class="info-row">
+            <span>Supported Platforms:</span>
+            <span>YouTube, V Live, Twitch, Vimeo</span>
+          </div>
+          <div class="info-row">
+            <span>Cost:</span>
+            <span style="color: #38a169; font-weight: 600;">Free (with optional premium features)</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Free Features</h3>
+          <div class="info-row">
+            <span>Speech Recognition:</span>
+            <span style="color: #38a169;">✓ Web Speech API (Built-in)</span>
+          </div>
+          <div class="info-row">
+            <span>Translation:</span>
+            <span style="color: #38a169;">✓ Google Translate (Free)</span>
+          </div>
+          <div class="info-row">
+            <span>Subtitle Export:</span>
+            <span style="color: #38a169;">✓ SRT Format</span>
+          </div>
+          <div class="info-row">
+            <span>Customization:</span>
+            <span style="color: #38a169;">✓ Full Styling Options</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Premium Features (Optional)</h3>
+          <div class="info-row">
+            <span>OpenAI Translation:</span>
+            <span style="color: #667eea;">Requires API Key</span>
+          </div>
+          <div class="info-row">
+            <span>Higher Quality:</span>
+            <span style="color: #667eea;">GPT-4 Translation</span>
+          </div>
+          <div class="info-row">
+            <span>Cost:</span>
+            <span style="color: #667eea;">Pay-per-use (OpenAI pricing)</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Usage Statistics</h3>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-number" id="totalTranslations">0</div>
+              <div class="stat-label">Total Translations</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" id="totalMinutes">0</div>
+              <div class="stat-label">Minutes Translated</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" id="apiCalls">0</div>
+              <div class="stat-label">API Calls Made</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" id="cacheHits">0</div>
+              <div class="stat-label">Cache Hits</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Support & Feedback</h3>
+          <div class="button-group">
+            <button class="secondary-button" id="reportIssue">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Report Issue
+            </button>
+            <button class="secondary-button" id="requestFeature">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 6V18M6 12H18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              Request Feature
+            </button>
+            <button class="secondary-button" id="viewDocs">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Documentation
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Data Management</h3>
+          <div class="button-group">
+            <button class="secondary-button" id="exportSettings">Export Settings</button>
+            <button class="secondary-button" id="importSettings">Import Settings</button>
+            <button class="danger-button" id="resetSettings">Reset All Settings</button>
+          </div>
+          <input type="file" id="settingsFileInput" name="settingsFileInput" accept=".json" style="display: none;">
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="actions">
+        <button id="saveSettings" class="primary-button">Save All Settings</button>
+        <button id="resetToDefaults" class="secondary-button">Reset to Defaults</button>
+      </div>
+      <div class="save-status" id="saveStatus"></div>
+    </footer>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

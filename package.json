@@ -1,0 +1,19 @@
+{
+  "name": "korean-subtitle-translator",
+  "version": "1.0.0",
+  "description": "Real-time Korean-to-English subtitle Chrome extension",
+  "scripts": {
+    "build": "echo 'Chrome extension ready for loading'",
+    "dev": "echo 'Load extension in Chrome for development'",
+    "package": "zip -r korean-subtitle-extension.zip . -x '*.git*' 'node_modules/*' 'package-lock.json' '.bolt/*'"
+  },
+  "keywords": [
+    "chrome-extension",
+    "korean",
+    "subtitles",
+    "translation",
+    "real-time"
+  ],
+  "author": "Korean Subtitle Translator",
+  "license": "MIT"
+}
