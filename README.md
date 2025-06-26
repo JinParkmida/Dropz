@@ -259,6 +259,9 @@ For users who want higher quality translations, you can optionally configure:
 - **tabCapture**: Required to access audio from video tabs
 - **activeTab**: Needed to inject subtitle overlay
 - **storage**: For saving settings and translation cache
+- **microphone**: Required by Chrome when using the Web Speech API. Even though
+  the extension processes tab audio, the browser still requests microphone
+  permission to start speech recognition.
 
 ## Troubleshooting
 

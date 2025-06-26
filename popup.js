@@ -34,7 +34,14 @@ class PopupController {
     
     // Check browser compatibility
     this.checkBrowserCompatibility();
-    
+
+    // Listen for permission errors from background or content scripts
+    chrome.runtime.onMessage.addListener((request) => {
+      if (request.type === 'MIC_PERMISSION_DENIED') {
+        this.showError('Microphone access is required to use captions. Please allow access and try again.');
+      }
+    });
+
     // Update UI based on settings
     this.updateUI();
   }
